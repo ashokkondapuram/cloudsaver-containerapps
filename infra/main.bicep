@@ -181,6 +181,12 @@ module identity './modules/app.bicep' = if (deployRuntime) {
     maxReplicas: 4
     env: concat(
       [
+        {
+          name: 'PLATFORM_PUBLIC_URL'
+          value: empty(portalPublicUrl)
+            ? 'https://${prefix}-portal.${environment.properties.defaultDomain}'
+            : portalPublicUrl
+        }
         { name: 'PLATFORM_KEY_PEPPER_VERSION', value: string(keyPepperVersion) }
         { name: 'PLATFORM_ENVIRONMENT', value: 'production' }
         { name: 'PLATFORM_PORTAL_AUTH', value: 'entra' }

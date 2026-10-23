@@ -158,7 +158,7 @@ class AzureWorkflowTests(unittest.TestCase):
         with self.assertRaises(deploy.DeploymentError):deploy.preflight(accepted(),azure)
 
     def test_worker_transition_blocks_scheduler_and_disabled_workers(self):
-        c=accepted();azure=Mock();azure.call.side_effect=[None,{'name':'scheduler'},['active']]
+        c=accepted();azure=Mock();azure.call.side_effect=[['csprod-scheduler'],['active']]
         with self.assertRaises(deploy.DeploymentError):deploy.assert_worker_transition(c,azure)
 
     def test_migration_failure_stops_before_cloud_job(self):
@@ -215,6 +215,7 @@ class AzureWorkflowTests(unittest.TestCase):
         c=accepted();azure=Mock(config=c)
         def inspect(*args):
             self.assertEqual(args[:3],('deployment','group','what-if'))
+            self.assertIn('--no-pretty-print',args)
             path=args[args.index('--parameters')+1][1:]
             value=json.loads(Path(path).read_text())
             self.assertEqual(value['parameters']['deployRuntime']['value'],True)

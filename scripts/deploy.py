@@ -73,11 +73,10 @@ def preflight(config, azure):
 
 def assert_worker_transition(config, azure):
     """Incremental ARM deployments do not remove disabled workers. Never silently leave one running."""
+    existing = set(azure.call('containerapp', 'list', '--resource-group', config['resourceGroup'], '--query', '[].name'))
     for key, suffix in WORKERS.items():
         name = config['prefix'] + '-' + suffix
-        app = azure.call('containerapp', 'show', '--name', name, '--resource-group', config['resourceGroup'],
-                         '--query', '{name:name}', missing_ok=True)
-        if app is None:
+        if name not in existing:
             continue
         revisions = azure.call('containerapp', 'revision', 'list', '--name', name,
                                '--resource-group', config['resourceGroup'], '--query', '[?properties.active].name')
@@ -96,7 +95,7 @@ def deploy_template(config, azure, *, runtime, what_if=False):
                 '--template-file', str(ROOT / 'infra/main.bicep'), '--parameters', '@' + str(path)]
         if what_if:
             # Resource IDs/change types only; never dump the complete what-if payload.
-            args += ['--query', 'changes[].{changeType:changeType,resourceId:resourceId}']
+            args += ['--no-pretty-print', '--query', 'changes[].{changeType:changeType,resourceId:resourceId}']
         else:
             args += ['--query', '{state:properties.provisioningState,outputs:properties.outputs}']
         result = azure.call(*args)
