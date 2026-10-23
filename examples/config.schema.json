@@ -1,0 +1,447 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "subscriptionId",
+    "resourceGroup",
+    "location",
+    "prefix",
+    "environmentName",
+    "environmentResourceGroup",
+    "registryName",
+    "registryResourceGroup",
+    "vaultName",
+    "vaultResourceGroup",
+    "cloudIdentityName",
+    "cloudIdentityResourceGroup",
+    "workloadProfileName",
+    "images",
+    "entra",
+    "portalPublicUrl",
+    "portalAllowedCidrs",
+    "trustedProxyCidrs",
+    "features",
+    "workers",
+    "backendConfig",
+    "extraSecrets",
+    "secretNames",
+    "application",
+    "portalDomain",
+    "keyPepperVersion"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "subscriptionId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "resourceGroup": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "pattern": "^[A-Za-z0-9_.()-]+$"
+    },
+    "location": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+$"
+    },
+    "prefix": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 12,
+      "pattern": "^[a-z][a-z0-9-]*[a-z0-9]$"
+    },
+    "environmentName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "pattern": "^[A-Za-z0-9_.()-]+$"
+    },
+    "environmentResourceGroup": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "pattern": "^[A-Za-z0-9_.()-]+$"
+    },
+    "registryName": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 50,
+      "pattern": "^[a-zA-Z0-9]+$"
+    },
+    "registryResourceGroup": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "pattern": "^[A-Za-z0-9_.()-]+$"
+    },
+    "vaultName": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 24,
+      "pattern": "^[a-zA-Z][a-zA-Z0-9-]*[a-zA-Z0-9]$"
+    },
+    "vaultResourceGroup": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "pattern": "^[A-Za-z0-9_.()-]+$"
+    },
+    "cloudIdentityName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "pattern": "^[A-Za-z0-9_.()-]+$"
+    },
+    "cloudIdentityResourceGroup": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 90,
+      "pattern": "^[A-Za-z0-9_.()-]+$"
+    },
+    "workloadProfileName": {
+      "type": "string"
+    },
+    "images": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "python",
+        "dashboard",
+        "identity",
+        "portal"
+      ],
+      "properties": {
+        "python": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+/[a-z0-9/._-]+@sha256:[a-f0-9]{64}$"
+        },
+        "dashboard": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+/[a-z0-9/._-]+@sha256:[a-f0-9]{64}$"
+        },
+        "identity": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+/[a-z0-9/._-]+@sha256:[a-f0-9]{64}$"
+        },
+        "portal": {
+          "type": "string",
+          "pattern": "^[a-z0-9.-]+/[a-z0-9/._-]+@sha256:[a-f0-9]{64}$"
+        }
+      }
+    },
+    "entra": {
+      "type": "object",
+      "required": [
+        "tenantId",
+        "portalClientId",
+        "audience",
+        "apiScope"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "tenantId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "portalClientId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "audience": {
+          "type": "string",
+          "minLength": 1
+        },
+        "apiScope": {
+          "type": "string",
+          "pattern": "^api://[^ ]+/[^ ]+$"
+        }
+      }
+    },
+    "portalPublicUrl": {
+      "type": "string",
+      "pattern": "^$|^https://[a-zA-Z0-9.-]+(:[0-9]+)?$"
+    },
+    "portalAllowedCidrs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "trustedProxyCidrs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scheduledScans",
+        "automatedAlerts",
+        "interactiveJobs",
+        "delivery",
+        "ai",
+        "gitopsPublish"
+      ],
+      "properties": {
+        "scheduledScans": {
+          "type": "boolean"
+        },
+        "automatedAlerts": {
+          "type": "boolean"
+        },
+        "interactiveJobs": {
+          "type": "boolean"
+        },
+        "delivery": {
+          "type": "boolean"
+        },
+        "ai": {
+          "type": "boolean"
+        },
+        "gitopsPublish": {
+          "type": "boolean"
+        }
+      }
+    },
+    "workers": {
+      "type": "object",
+      "required": [
+        "scan",
+        "scheduler",
+        "dispatcher"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "scan": {
+          "type": "boolean"
+        },
+        "scheduler": {
+          "type": "boolean"
+        },
+        "dispatcher": {
+          "type": "boolean"
+        }
+      }
+    },
+    "backendConfig": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[A-Z][A-Z0-9_]*$"
+      },
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "extraSecrets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "workload",
+          "appSecretName",
+          "keyVaultSecretName",
+          "envName"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "workload": {
+            "enum": [
+              "identity",
+              "portal",
+              "scanner",
+              "tenant",
+              "analytics",
+              "notifications",
+              "gateway",
+              "dashboard",
+              "worker",
+              "scheduler",
+              "dispatcher"
+            ]
+          },
+          "appSecretName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 50,
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "keyVaultSecretName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 127,
+            "pattern": "^[A-Za-z0-9-]+$"
+          },
+          "envName": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          }
+        }
+      }
+    },
+    "secretNames": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cloudDatabaseUrl",
+        "cloudRedisGatewayUrl",
+        "cloudRedisWorkerUrl",
+        "gatewayCallerToken",
+        "tenantCallerToken",
+        "scannerCallerToken",
+        "analyticsCallerToken",
+        "notificationCallerToken",
+        "identityDatabaseUrl",
+        "identityRedisUrl",
+        "workspaceKeyPepper",
+        "identityCallerDigests",
+        "portalCallerToken",
+        "portalEntraClientSecret",
+        "cloudMigrationUrl",
+        "identityMigrationUrl"
+      ],
+      "properties": {
+        "cloudDatabaseUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "cloudRedisGatewayUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "cloudRedisWorkerUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "gatewayCallerToken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "tenantCallerToken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "scannerCallerToken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "analyticsCallerToken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "notificationCallerToken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "identityDatabaseUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "identityRedisUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "workspaceKeyPepper": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "identityCallerDigests": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "portalCallerToken": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "portalEntraClientSecret": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "cloudMigrationUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "identityMigrationUrl": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 127,
+          "pattern": "^[A-Za-z0-9-]+$"
+        }
+      }
+    },
+    "application": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceRevision",
+        "acceptanceRecord"
+      ],
+      "properties": {
+        "sourceRevision": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "acceptanceRecord": {
+          "type": "string",
+          "maxLength": 1000
+        }
+      }
+    },
+    "portalDomain": {
+      "type": "object",
+      "required": [
+        "hostname",
+        "certificateId"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "hostname": {
+          "type": "string",
+          "pattern": "^$|^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$"
+        },
+        "certificateId": {
+          "type": "string",
+          "pattern": "^$|^/subscriptions/[^/]+/resourceGroups/[^/]+/providers/Microsoft.App/managedEnvironments/[^/]+/(certificates|managedCertificates)/[^/]+$"
+        }
+      }
+    },
+    "keyPepperVersion": {
+      "type": "integer",
+      "minimum": 1
+    }
+  }
+}

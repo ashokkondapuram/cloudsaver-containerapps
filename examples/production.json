@@ -1,0 +1,81 @@
+{
+  "subscriptionId": "00000000-0000-0000-0000-000000000000",
+  "resourceGroup": "rg-cloudsaver-prod",
+  "location": "eastus",
+  "prefix": "csprod",
+  "environmentName": "cae-cloudsaver-prod",
+  "environmentResourceGroup": "rg-cloudsaver-prod",
+  "registryName": "myregistry",
+  "registryResourceGroup": "rg-cloudsaver-prod",
+  "vaultName": "kv-cloudsaver-prod",
+  "vaultResourceGroup": "rg-cloudsaver-prod",
+  "cloudIdentityName": "cloudsaver-scan",
+  "cloudIdentityResourceGroup": "rg-cloudsaver-prod",
+  "workloadProfileName": "Consumption",
+  "images": {
+    "python": "myregistry.azurecr.io/cloudsaver-python@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "dashboard": "myregistry.azurecr.io/cloudsaver-web-dashboard@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "identity": "myregistry.azurecr.io/zafin-platform-identity@sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "portal": "myregistry.azurecr.io/zafin-platform-portal@sha256:0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "entra": {
+    "tenantId": "00000000-0000-0000-0000-000000000000",
+    "portalClientId": "00000000-0000-0000-0000-000000000000",
+    "audience": "REPLACE_WITH_EXACT_ACCESS_TOKEN_AUDIENCE",
+    "apiScope": "api://REPLACE/access_as_user"
+  },
+  "portalPublicUrl": "",
+  "portalAllowedCidrs": [],
+  "trustedProxyCidrs": [],
+  "features": {
+    "scheduledScans": false,
+    "automatedAlerts": false,
+    "interactiveJobs": false,
+    "delivery": false,
+    "ai": false,
+    "gitopsPublish": false
+  },
+  "workers": {
+    "scan": false,
+    "scheduler": false,
+    "dispatcher": false
+  },
+  "backendConfig": {
+    "CLOUDSAVER_AZURE_APP_CLIENT_ID": "",
+    "CLOUDSAVER_AI_TARGETS": "[]",
+    "CLOUDSAVER_AI_HOURLY_ATTEMPTS": "10",
+    "CLOUDSAVER_GITOPS_TARGETS": "[]",
+    "CLOUDSAVER_PLAN_POLICY": "{}",
+    "CLOUDSAVER_NOTIFICATION_TARGETS": "[]",
+    "CLOUDSAVER_SCHEDULER_TICK_SECONDS": "300",
+    "CLOUDSAVER_AI_BATCH_TICK_SECONDS": "30"
+  },
+  "extraSecrets": [],
+  "secretNames": {
+    "cloudDatabaseUrl": "csprod-cloud-database-url",
+    "cloudRedisGatewayUrl": "csprod-cloud-redis-gateway-url",
+    "cloudRedisWorkerUrl": "csprod-cloud-redis-worker-url",
+    "gatewayCallerToken": "csprod-gateway-caller-token",
+    "tenantCallerToken": "csprod-tenant-caller-token",
+    "scannerCallerToken": "csprod-scanner-caller-token",
+    "analyticsCallerToken": "csprod-analytics-caller-token",
+    "notificationCallerToken": "csprod-notification-caller-token",
+    "identityDatabaseUrl": "csprod-identity-database-url",
+    "identityRedisUrl": "csprod-identity-redis-url",
+    "workspaceKeyPepper": "csprod-workspace-key-pepper",
+    "identityCallerDigests": "csprod-identity-caller-digests",
+    "portalCallerToken": "csprod-portal-caller-token",
+    "portalEntraClientSecret": "csprod-portal-entra-client-secret",
+    "cloudMigrationUrl": "csprod-cloud-migration-url",
+    "identityMigrationUrl": "csprod-identity-migration-url"
+  },
+  "application": {
+    "sourceRevision": "6fc05bb3215a300bbec3b05218614dce35a4403d",
+    "acceptanceRecord": ""
+  },
+  "portalDomain": {
+    "hostname": "",
+    "certificateId": ""
+  },
+  "keyPepperVersion": 1
+}

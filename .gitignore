@@ -1,0 +1,13 @@
+/config/
+/.state/
+/dist/
+infra/**/*.json
+infra/main.json
+infra/environment.json
+*.env
+.env*
+*.pem
+*.key
+__pycache__/
+.pytest_cache/
+.venv/
