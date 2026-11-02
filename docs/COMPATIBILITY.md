@@ -1,6 +1,6 @@
 # Application compatibility and deployment gates
 
-This infrastructure targets CloudSaver **1.8.0** at commit `7061f4196e8dfa50fbb2532e3606d24517fd3a8d` in [ashokkondapuram/cloudsaver](https://github.com/ashokkondapuram/cloudsaver). Environment contracts: [DEPLOYMENT_ENVIRONMENT.md](DEPLOYMENT_ENVIRONMENT.md) (application repo) and [docs/DEPLOYMENT_ENVIRONMENT.md](DEPLOYMENT_ENVIRONMENT.md) (this repo).
+This infrastructure targets CloudSaver **1.8.1** at commit `f30dc9da25ed5d85362e32d3a1065328f50456fa` in [ashokkondapuram/cloudsaver](https://github.com/ashokkondapuram/cloudsaver). Environment contracts: [DEPLOYMENT_ENVIRONMENT.md](DEPLOYMENT_ENVIRONMENT.md) (application repo) and [docs/DEPLOYMENT_ENVIRONMENT.md](DEPLOYMENT_ENVIRONMENT.md) (this repo).
 
 Bicep compilation and offline tests validate infrastructure structure/configuration contracts. They do not prove that the source application's current images start successfully.
 

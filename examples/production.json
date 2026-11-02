@@ -96,8 +96,8 @@
     "identityMigrationUrl": "csprod-identity-migration-url"
   },
   "application": {
-    "sourceRevision": "7061f4196e8dfa50fbb2532e3606d24517fd3a8d",
-    "acceptanceRecord": "Target cloudsaver 1.8.0 (7061f41): run migrations through 0033, engineering cursor secret, and staging smoke before deployRuntime."
+    "sourceRevision": "f30dc9da25ed5d85362e32d3a1065328f50456fa",
+    "acceptanceRecord": "Target cloudsaver 1.8.1 (f30dc9d): run migrations through 0033, engineering cursor secret, and staging smoke before deployRuntime."
   },
   "portalDomain": {
     "hostname": "",
