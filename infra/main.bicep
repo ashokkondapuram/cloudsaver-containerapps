@@ -161,6 +161,14 @@ var cloudBaseEnv = [
   { name: 'CLOUDSAVER_TRUSTED_PROXIES', value: join(trustedProxyCidrs, ',') }
   { name: 'CLOUDSAVER_DB_POOL_SIZE', value: '2' }
   { name: 'CLOUDSAVER_DB_MAX_OVERFLOW', value: '3' }
+  { name: 'CLOUDSAVER_DB_POOL_TIMEOUT', value: '5' }
+  { name: 'CLOUDSAVER_DB_POOL_RECYCLE', value: '1800' }
+  { name: 'CLOUDSAVER_IDENTITY_CACHE_SECONDS', value: '15' }
+  { name: 'CLOUDSAVER_AUTO_BILLING_SYNC', value: 'true' }
+  { name: 'CLOUDSAVER_COMMITMENT_SYNC', value: 'true' }
+  { name: 'CLOUDSAVER_PLATFORM_OUTBOX_DISPATCH', value: 'false' }
+  { name: 'CLOUDSAVER_FINOPS_AUTOPILOT', value: 'false' }
+  { name: 'CLOUDSAVER_AGENT_ENABLED', value: 'false' }
 ]
 
 module identity './modules/app.bicep' = if (deployRuntime) {
@@ -312,6 +320,7 @@ module scanner './modules/app.bicep' = if (deployRuntime) {
         { name: 'AZURE_CLIENT_ID', value: cloudIdentity.properties.clientId }
         { name: 'CLOUDSAVER_DATABASE_URL', secretRef: 'clouddatabaseurl' }
         { name: 'REDIS_URL', secretRef: 'cloudredisworkerurl' }
+        { name: 'CLOUDSAVER_PROVIDER_REDIS_URL', secretRef: 'cloudredisworkerurl' }
         { name: 'CLOUDSAVER_IDENTITY_TOKEN', secretRef: 'scannercallertoken' }
       ]),
       map(
@@ -355,6 +364,7 @@ module tenant './modules/app.bicep' = if (deployRuntime) {
         { name: 'CLOUDSAVER_IDENTITY_URL', value: deployRuntime ? identity!.outputs.url : '' }
         { name: 'CLOUDSAVER_DATABASE_URL', secretRef: 'clouddatabaseurl' }
         { name: 'REDIS_URL', secretRef: 'cloudredisworkerurl' }
+        { name: 'CLOUDSAVER_PROVIDER_REDIS_URL', secretRef: 'cloudredisworkerurl' }
         { name: 'CLOUDSAVER_IDENTITY_TOKEN', secretRef: 'tenantcallertoken' }
       ]),
       map(
@@ -399,6 +409,7 @@ module analytics './modules/app.bicep' = if (deployRuntime) {
         { name: 'SCANNER_SERVICE_URL', value: deployRuntime ? scanner!.outputs.url : '' }
         { name: 'CLOUDSAVER_DATABASE_URL', secretRef: 'clouddatabaseurl' }
         { name: 'REDIS_URL', secretRef: 'cloudredisworkerurl' }
+        { name: 'CLOUDSAVER_PROVIDER_REDIS_URL', secretRef: 'cloudredisworkerurl' }
         { name: 'CLOUDSAVER_IDENTITY_TOKEN', secretRef: 'analyticscallertoken' }
       ]),
       map(
@@ -443,6 +454,7 @@ module notifications './modules/app.bicep' = if (deployRuntime) {
         { name: 'SCANNER_SERVICE_URL', value: deployRuntime ? scanner!.outputs.url : '' }
         { name: 'CLOUDSAVER_DATABASE_URL', secretRef: 'clouddatabaseurl' }
         { name: 'REDIS_URL', secretRef: 'cloudredisworkerurl' }
+        { name: 'CLOUDSAVER_PROVIDER_REDIS_URL', secretRef: 'cloudredisworkerurl' }
         { name: 'CLOUDSAVER_IDENTITY_TOKEN', secretRef: 'notificationcallertoken' }
       ]),
       map(
@@ -574,6 +586,7 @@ module worker './modules/app.bicep' = if (deployRuntime && workers.scan) {
         { name: 'AZURE_CLIENT_ID', value: cloudIdentity.properties.clientId }
         { name: 'CLOUDSAVER_DATABASE_URL', secretRef: 'clouddatabaseurl' }
         { name: 'REDIS_URL', secretRef: 'cloudredisworkerurl' }
+        { name: 'CLOUDSAVER_PROVIDER_REDIS_URL', secretRef: 'cloudredisworkerurl' }
       ]),
       map(
         filter(extraSecrets, b => b.workload == 'worker'),
@@ -622,6 +635,7 @@ module scheduler './modules/app.bicep' = if (deployRuntime && workers.scheduler)
         { name: 'CLOUDSAVER_IDENTITY_URL', value: deployRuntime ? identity!.outputs.url : '' }
         { name: 'CLOUDSAVER_DATABASE_URL', secretRef: 'clouddatabaseurl' }
         { name: 'REDIS_URL', secretRef: 'cloudredisworkerurl' }
+        { name: 'CLOUDSAVER_PROVIDER_REDIS_URL', secretRef: 'cloudredisworkerurl' }
       ]),
       map(
         filter(extraSecrets, b => b.workload == 'scheduler'),
@@ -663,6 +677,7 @@ module dispatcher './modules/app.bicep' = if (deployRuntime && workers.dispatche
         { name: 'CLOUDSAVER_IDENTITY_URL', value: deployRuntime ? identity!.outputs.url : '' }
         { name: 'CLOUDSAVER_DATABASE_URL', secretRef: 'clouddatabaseurl' }
         { name: 'REDIS_URL', secretRef: 'cloudredisworkerurl' }
+        { name: 'CLOUDSAVER_PROVIDER_REDIS_URL', secretRef: 'cloudredisworkerurl' }
       ]),
       map(
         filter(extraSecrets, b => b.workload == 'dispatcher'),

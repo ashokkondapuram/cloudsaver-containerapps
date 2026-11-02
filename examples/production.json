@@ -42,15 +42,41 @@
   },
   "backendConfig": {
     "CLOUDSAVER_AZURE_APP_CLIENT_ID": "",
+    "CLOUDSAVER_AZURE_ACCESS": "federated",
+    "CLOUDSAVER_AWS_HUB_ROLE_ARN": "",
+    "CLOUDSAVER_GCP_WORKLOAD_PROVIDER": "",
+    "CLOUDSAVER_ENTRA_AUDIENCE": "",
+    "CLOUDSAVER_LIVE_EVIDENCE_ENABLED": "false",
+    "CLOUDSAVER_LIVE_EVIDENCE_MAX_RESOURCES": "25",
     "CLOUDSAVER_AI_TARGETS": "[]",
     "CLOUDSAVER_AI_HOURLY_ATTEMPTS": "10",
     "CLOUDSAVER_GITOPS_TARGETS": "[]",
     "CLOUDSAVER_PLAN_POLICY": "{}",
     "CLOUDSAVER_NOTIFICATION_TARGETS": "[]",
     "CLOUDSAVER_SCHEDULER_TICK_SECONDS": "300",
-    "CLOUDSAVER_AI_BATCH_TICK_SECONDS": "30"
+    "CLOUDSAVER_AI_BATCH_TICK_SECONDS": "30",
+    "CLOUDSAVER_DIRECTORY_MAX_LAG_SECONDS": "30"
   },
-  "extraSecrets": [],
+  "extraSecrets": [
+    {
+      "workload": "analytics",
+      "appSecretName": "engineering-cursor-key",
+      "keyVaultSecretName": "csprod-engineering-cursor-key",
+      "envName": "CLOUDSAVER_ENGINEERING_CURSOR_KEY"
+    },
+    {
+      "workload": "scanner",
+      "appSecretName": "engineering-cursor-key",
+      "keyVaultSecretName": "csprod-engineering-cursor-key",
+      "envName": "CLOUDSAVER_ENGINEERING_CURSOR_KEY"
+    },
+    {
+      "workload": "gateway",
+      "appSecretName": "engineering-cursor-key",
+      "keyVaultSecretName": "csprod-engineering-cursor-key",
+      "envName": "CLOUDSAVER_ENGINEERING_CURSOR_KEY"
+    }
+  ],
   "secretNames": {
     "cloudDatabaseUrl": "csprod-cloud-database-url",
     "cloudRedisGatewayUrl": "csprod-cloud-redis-gateway-url",
@@ -70,8 +96,8 @@
     "identityMigrationUrl": "csprod-identity-migration-url"
   },
   "application": {
-    "sourceRevision": "6fc05bb3215a300bbec3b05218614dce35a4403d",
-    "acceptanceRecord": ""
+    "sourceRevision": "7061f4196e8dfa50fbb2532e3606d24517fd3a8d",
+    "acceptanceRecord": "Target cloudsaver 1.8.0 (7061f41): run migrations through 0033, engineering cursor secret, and staging smoke before deployRuntime."
   },
   "portalDomain": {
     "hostname": "",

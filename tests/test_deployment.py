@@ -145,7 +145,9 @@ class AzureWorkflowTests(unittest.TestCase):
         c=accepted();azure=Mock()
         azure.call.side_effect=[{'location':'eastus','id':'env','profiles':[{'name':'Consumption'}]},
                                {'server':'myregistry.azurecr.io','mode':'LegacyRegistryPermissions'},
-                               {'rbac':True}, list(c['secretNames'].values()), {'id':'identity','clientId':'id'}]
+                               {'rbac':True},
+                               sorted(set(c['secretNames'].values()) | {b['keyVaultSecretName'] for b in c['extraSecrets']}),
+                               {'id':'identity','clientId':'id'}]
         deploy.preflight(c,azure)
         calls=[call.args for call in azure.call.call_args_list]
         self.assertIn(('keyvault','secret','list'),[a[:3] for a in calls])

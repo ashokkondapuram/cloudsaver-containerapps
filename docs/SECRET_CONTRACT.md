@@ -20,6 +20,7 @@ The values below live in existing Azure Key Vault secrets. Configuration stores 
 | `portalEntraClientSecret` | Confidential portal client's Entra secret | Operator portal |
 | `cloudMigrationUrl` | CloudSaver schema-owner PostgreSQL DSN | CloudSaver migration Job only |
 | `identityMigrationUrl` | Platform `identity_owner` PostgreSQL DSN | Platform migration Job only |
+| *(optional via `extraSecrets`)* | `CLOUDSAVER_ENGINEERING_CURSOR_KEY` — ≥32 byte hex | Analytics, scanner, gateway |
 
 URL-encode DSN passwords. External database CA roots must be trusted by the **images**, including migration images. Configure required CA paths/driver settings in reviewed application images; these templates do not disable certificate verification or mount arbitrary private credential files. Ensure Redis certificates/hostnames are verified by the current clients.
 
